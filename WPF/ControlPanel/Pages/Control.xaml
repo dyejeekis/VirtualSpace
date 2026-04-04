@@ -153,6 +153,22 @@
                                         <ComboBoxItem>End</ComboBoxItem>
                                         <ComboBoxItem>PageUp</ComboBoxItem>
                                         <ComboBoxItem>PageDown</ComboBoxItem>
+                                        <ComboBoxItem>Space</ComboBoxItem>
+                                        <ComboBoxItem>Insert</ComboBoxItem>
+                                        <ComboBoxItem>Delete</ComboBoxItem>
+                                        <ComboBoxItem>Back</ComboBoxItem>
+                                        <ComboBoxItem>Escape</ComboBoxItem>
+                                        <ComboBoxItem>OemTilde</ComboBoxItem>
+                                        <ComboBoxItem>OemMinus</ComboBoxItem>
+                                        <ComboBoxItem>OemPlus</ComboBoxItem>
+                                        <ComboBoxItem>OemOpenBrackets</ComboBoxItem>
+                                        <ComboBoxItem>Oem6</ComboBoxItem>
+                                        <ComboBoxItem>Oem5</ComboBoxItem>
+                                        <ComboBoxItem>OemSemicolon</ComboBoxItem>
+                                        <ComboBoxItem>OemQuotes</ComboBoxItem>
+                                        <ComboBoxItem>OemComma</ComboBoxItem>
+                                        <ComboBoxItem>OemPeriod</ComboBoxItem>
+                                        <ComboBoxItem>Oem2</ComboBoxItem>
                                     </ComboBox>
                                 </StackPanel>
 

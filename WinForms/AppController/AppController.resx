@@ -2799,6 +2799,54 @@
   <data name="cb_hk_key.Items67" xml:space="preserve">
     <value>PageDown</value>
   </data>
+  <data name="cb_hk_key.Items68" xml:space="preserve">
+    <value>Space</value>
+  </data>
+  <data name="cb_hk_key.Items69" xml:space="preserve">
+    <value>Insert</value>
+  </data>
+  <data name="cb_hk_key.Items70" xml:space="preserve">
+    <value>Delete</value>
+  </data>
+  <data name="cb_hk_key.Items71" xml:space="preserve">
+    <value>Back</value>
+  </data>
+  <data name="cb_hk_key.Items72" xml:space="preserve">
+    <value>Escape</value>
+  </data>
+  <data name="cb_hk_key.Items73" xml:space="preserve">
+    <value>OemTilde</value>
+  </data>
+  <data name="cb_hk_key.Items74" xml:space="preserve">
+    <value>OemMinus</value>
+  </data>
+  <data name="cb_hk_key.Items75" xml:space="preserve">
+    <value>OemPlus</value>
+  </data>
+  <data name="cb_hk_key.Items76" xml:space="preserve">
+    <value>OemOpenBrackets</value>
+  </data>
+  <data name="cb_hk_key.Items77" xml:space="preserve">
+    <value>Oem6</value>
+  </data>
+  <data name="cb_hk_key.Items78" xml:space="preserve">
+    <value>Oem5</value>
+  </data>
+  <data name="cb_hk_key.Items79" xml:space="preserve">
+    <value>OemSemicolon</value>
+  </data>
+  <data name="cb_hk_key.Items80" xml:space="preserve">
+    <value>OemQuotes</value>
+  </data>
+  <data name="cb_hk_key.Items81" xml:space="preserve">
+    <value>OemComma</value>
+  </data>
+  <data name="cb_hk_key.Items82" xml:space="preserve">
+    <value>OemPeriod</value>
+  </data>
+  <data name="cb_hk_key.Items83" xml:space="preserve">
+    <value>Oem2</value>
+  </data>
   <data name="ts_PageNav.TabIndex" type="System.Int32, mscorlib">
     <value>3</value>
   </data>
