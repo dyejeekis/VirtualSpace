@@ -108,6 +108,40 @@ namespace VirtualSpace.Helpers
             return User32.GetAsyncKeyState( (int)key ) < 0;
         }
 
+        public static void ForceForegroundFocus()
+        {
+            if ( IsKeyHold( Keys.Menu ) || IsKeyHold( Keys.ControlKey ) ||
+                 IsKeyHold( Keys.ShiftKey ) || IsKeyHold( Keys.LWin ) || IsKeyHold( Keys.RWin ) )
+            {
+                ForceForegroundFocusByApi();
+            }
+            else
+            {
+                SendKeysCombine( new List<Keys> {Keys.Menu, Keys.Tab} );
+            }
+        }
+
+        private static void ForceForegroundFocusByApi()
+        {
+            var fgWnd = User32.GetForegroundWindow();
+            if ( fgWnd == IntPtr.Zero ) return;
+
+            var curThreadId = User32.GetCurrentThreadId();
+            var fgThreadId  = (uint)User32.GetWindowThreadProcessId( fgWnd, out _ );
+
+            User32.SystemParametersInfo( User32.SPI_SETFOREGROUNDLOCKTIMEOUT, 0, IntPtr.Zero, 0 );
+
+            if ( curThreadId != fgThreadId )
+                User32.AttachThreadInput( curThreadId, fgThreadId, true );
+
+            User32.SetForegroundWindow( fgWnd );
+            User32.BringWindowToTop( fgWnd );
+            User32.SwitchToThisWindow( fgWnd, true );
+
+            if ( curThreadId != fgThreadId )
+                User32.AttachThreadInput( curThreadId, fgThreadId, false );
+        }
+
         public static void UnHook()
         {
             User32.UnhookWindowsHookEx( HookId );

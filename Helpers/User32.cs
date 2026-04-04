@@ -125,5 +125,17 @@ namespace VirtualSpace.Helpers
 
         [DllImport( "user32.dll", SetLastError = true )]
         public static extern void SwitchToThisWindow( IntPtr hWnd, bool fAltTab );
+
+        [DllImport( "user32.dll", SetLastError = true )]
+        public static extern bool AttachThreadInput( uint idAttach, uint idAttachTo, bool fAttach );
+
+        [DllImport( "kernel32.dll" )]
+        public static extern uint GetCurrentThreadId();
+
+        [DllImport( "user32.dll", SetLastError = true )]
+        [return: MarshalAs( UnmanagedType.Bool )]
+        public static extern bool SystemParametersInfo( uint uiAction, uint uiParam, IntPtr pvParam, uint fWinIni );
+
+        public const uint SPI_SETFOREGROUNDLOCKTIMEOUT = 0x2001;
     }
 }

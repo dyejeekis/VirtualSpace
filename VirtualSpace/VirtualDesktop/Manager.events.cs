@@ -84,47 +84,19 @@ namespace VirtualSpace.VirtualDesktop
                 forceFocusForegroundWindow ??= Manager.Configs.Cluster.ForceFocusForegroundWindow;
                 if ( (bool)forceFocusForegroundWindow )
                 {
-                    var hTaskBar = User32.FindWindow( Const.TaskbarWndClass, "" );
-                    if ( hTaskBar == IntPtr.Zero )
-                    {
-                        Logger.Verbose( "Taskbar not found, switch desktop only." );
-                        desktop.MakeVisible();
-                        return;
-                    }
-
-                    if ( SysInfo.IsTaskbarVisible() )
-                    {
-                        User32.SetForegroundWindow( hTaskBar );
-                        desktop.MakeVisible();
-
-                        if ( User32.GetForegroundWindow() != hTaskBar )
-                        {
-                            Logger.Verbose( "Taskbar not active, switch desktop only." );
-                            return;
-                        }
-
-                        if ( SysInfo.IsAdministrator )
-                        {
-                            Logger.Verbose( "Send [Alt+Esc]." );
-                            LowLevelKeyboardHook.MultipleKeyPress( new List<Keys> {Keys.Menu, Keys.Escape} );
-                        }
-                        else
-                        {
-                            Logger.Verbose( "Force minimize taskbar." );
-                            _ = User32.ShowWindow( hTaskBar, (short)ShowState.SW_FORCEMINIMIZE );
-                        }
-                    }
-                    else
-                    {
-                        Logger.Verbose( "Taskbar is hiding, switch desktop only." );
-                        desktop.MakeVisible();
-                    }
+                    desktop.MakeVisible();
+                    ForceFocusForegroundWindow();
                 }
                 else
                 {
                     desktop.MakeVisible();
                 }
             };
+        }
+
+        private static void ForceFocusForegroundWindow()
+        {
+            LowLevelKeyboardHook.ForceForegroundFocus();
         }
     }
 }
