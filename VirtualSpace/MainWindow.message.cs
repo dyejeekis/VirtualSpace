@@ -129,8 +129,13 @@ namespace VirtualSpace
 
             void SwitchByIndex( int index )
             {
-                if ( Manager.CurrentProfile.DesktopOrder.Count > index )
-                    DesktopWrapper.MakeVisibleByGuid( Manager.CurrentProfile.DesktopOrder[index] );
+                if ( Manager.CurrentProfile.DesktopOrder.Count <= index ) return;
+
+                var targetGuid = Manager.CurrentProfile.DesktopOrder[index];
+                if ( targetGuid == DesktopWrapper.CurrentGuid && VirtualDesktopManager.LastDesktopId != Guid.Empty )
+                    DesktopWrapper.MakeVisibleByGuid( VirtualDesktopManager.LastDesktopId );
+                else
+                    DesktopWrapper.MakeVisibleByGuid( targetGuid );
             }
 
             void MoveForegroundWindowToDesktop( int sysIndex, bool follow = false )
