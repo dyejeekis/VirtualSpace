@@ -121,7 +121,7 @@ namespace VirtualSpace.Helpers
             }
         }
 
-        private static void ForceForegroundFocusByApi()
+        public static void ForceForegroundFocusByApi()
         {
             var fgWnd = User32.GetForegroundWindow();
             if ( fgWnd == IntPtr.Zero ) return;
