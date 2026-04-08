@@ -99,48 +99,40 @@ namespace VirtualSpace.VirtualDesktop
 
         private static void ForceFocusForegroundWindow()
         {
-            // var modifierHeld = LowLevelKeyboardHook.IsKeyHold( Keys.Menu ) ||
-            //                    LowLevelKeyboardHook.IsKeyHold( Keys.ControlKey ) ||
-            //                    LowLevelKeyboardHook.IsKeyHold( Keys.ShiftKey ) ||
-            //                    LowLevelKeyboardHook.IsKeyHold( Keys.LWin ) ||
-            //                    LowLevelKeyboardHook.IsKeyHold( Keys.RWin );
-            // Logger.Info( $"[Focus] Start. ModifierHeld={modifierHeld}, CurrentDesktop={DesktopWrapper.CurrentGuid}" );
-
-            LowLevelKeyboardHook.ForceForegroundFocus();
+            // First try to find and focus a window on the current desktop directly,
+            // avoiding Alt+Tab which can cycle to the wrong window of the same app
+            // on a different desktop.
+            var targetWnd = FindWindowOnCurrentDesktop();
+            if ( targetWnd != IntPtr.Zero )
+            {
+                FocusWindow( targetWnd );
+            }
+            else
+            {
+                // No window found yet — fall back to Alt+Tab / API approach
+                LowLevelKeyboardHook.ForceForegroundFocus();
+            }
 
             for ( var i = 0; i < FocusRetryMax; i++ )
             {
                 var fgWnd = User32.GetForegroundWindow();
-                if ( fgWnd == IntPtr.Zero )
-                {
-                    // Logger.Info( $"[Focus] Retry {i}: No foreground window" );
-                    break;
-                }
+                if ( fgWnd == IntPtr.Zero ) break;
 
                 try
                 {
                     var fgDesktop = DesktopWrapper.GuidFromWindow( fgWnd );
-                    // Logger.Info( $"[Focus] Retry {i}: fgWnd=0x{fgWnd.ToString( "X" )}, fgDesktop={fgDesktop}, current={DesktopWrapper.CurrentGuid}, match={fgDesktop == DesktopWrapper.CurrentGuid}" );
                     if ( fgDesktop == DesktopWrapper.CurrentGuid ) break;
                 }
                 catch
                 {
-                    // Logger.Info( $"[Focus] Retry {i}: GuidFromWindow threw: {ex.Message}" );
+                    // GuidFromWindow can throw on certain window types
                 }
 
                 System.Threading.Thread.Sleep( FocusRetryDelayMs );
 
-                // Find a window on the current desktop and focus it
-                var targetWnd = FindWindowOnCurrentDesktop();
+                targetWnd = FindWindowOnCurrentDesktop();
                 if ( targetWnd != IntPtr.Zero )
-                {
-                    // Logger.Info( $"[Focus] Retry {i}: Found target 0x{targetWnd.ToString( "X" )} on current desktop, focusing" );
                     FocusWindow( targetWnd );
-                }
-                // else
-                // {
-                //     Logger.Info( $"[Focus] Retry {i}: No window found on current desktop" );
-                // }
             }
         }
 
