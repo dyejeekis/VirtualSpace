@@ -36,6 +36,14 @@ namespace VirtualSpace.Tools
             TraySettings.Click += ( sender, args ) => { MainWindow.AcForm.BringToTop(); };
             TrayQuit.Click += ( sender,     args ) => { MainWindow.Quit(); };
 
+            Ti.MouseClick += ( sender, args ) =>
+            {
+                if ( args.Button != MouseButtons.Left ) return;
+                var mw = MainWindow.GetMainWindow();
+                if ( mw == null ) return;
+                User32.PostMessage( mw.Handle, WinMsg.WM_HOTKEY, UserMessage.RiseView, 0 );
+            };
+
             TiMenu.Items.AddRange( new ToolStripItem[] {TraySettings, ToolStripSeparator, TrayQuit} );
             Ti.ContextMenuStrip = TiMenu;
         }
